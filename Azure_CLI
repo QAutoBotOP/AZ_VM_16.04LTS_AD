@@ -1,0 +1,18 @@
+#PLACE ACCOUNT NAME AND PASSWORD HERE:
+$accname = "PLACE_ACCOUNT_NAME_INSIDE"
+$password = ConvertTo-SecureString -String "PLACE_PASSWORD_INSIDE" -AsPlainText -Force
+
+#CREATES RESOURCE GROUP, SKIP THIS LINE IF YOU ALREADY MADE IT
+az group create --name secure --location centralus
+
+#CREATES UBUNTU SERVER 16.04LTS VM NAMED securevm, IN GROUP secure
+az vm create --resource-group secure --name securevm --image UbuntuLTS --assign-identity --admin-username $accname --admin-password $password
+
+#OPENS PORT 22 ON securevm
+az vm open-port --resource-group secure --name securevm --port 22
+
+#DISABLES BOOT DIAGNOSTICS ON securevm INSIDE secure RESOURCE GROUP
+az vm boot-diagnostics disable --name securevm --resource-group secure
+
+#ADDS AZURE AD TO securevm
+az vm extension set --publisher Microsoft.Azure.ActiveDirectory.LinuxSSH --name AADLoginForLinux --resource-group secure --vm-name securevm
