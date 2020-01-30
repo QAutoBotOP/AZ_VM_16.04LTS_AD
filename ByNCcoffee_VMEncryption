@@ -7,5 +7,5 @@ $diskEncryptionKeyVaultUrl = $keyVault.VaultUri;
 $keyVaultResourceId = $keyVault.ResourceId;
 $keyEncryptionKeyUrl = (Get-AzKeyVaultKey -VaultName $keyVaultName -Name thekey).Key.kid;
 
-#Needs-skipVmBackup parameter, added it.
-Set-AzVMDiskEncryptionExtension -ResourceGroupName secure -vmname securevm -DiskEncryptionKeyVaultUrl $diskEncryptionKeyVaultUrl -DiskEncryptionKeyVaultId $keyVaultResourceId -KeyEncryptionKeyUrl $keyEncryptionKeyUrl -KeyEncryptionKeyVaultId $keyVaultResourceId -skipVmBackup
+#Needs-skipVmBackup parameter, added it. Also added -volumeType 'OS'
+Set-AzVMDiskEncryptionExtension -volumeType 'OS' -ResourceGroupName secure -vmname securevm -DiskEncryptionKeyVaultUrl $diskEncryptionKeyVaultUrl -DiskEncryptionKeyVaultId $keyVaultResourceId -KeyEncryptionKeyUrl $keyEncryptionKeyUrl -KeyEncryptionKeyVaultId $keyVaultResourceId -skipVmBackup
