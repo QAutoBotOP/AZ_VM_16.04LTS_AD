@@ -8,7 +8,7 @@ az group create --name secure --location centralus
 #CREATES UBUNTU SERVER 16.04LTS VM NAMED securevm, IN GROUP secure. 
 #Added --size B2ms because later in assignment it is stated the RAM needs atleast 8GB for encryption.
 #Check the other file in this repo, I updated NetworkChucks file so it works again. 
-az vm create --resource-group secure --name securevm --image UbuntuLTS --assign-identity --admin-username $accname --admin-password $password
+az vm create --resource-group secure --name securevm --image UbuntuLTS --size B2ms --assign-identity --admin-username $accname --admin-password $password
 
 #OPENS PORT 22 ON securevm
 az vm open-port --resource-group secure --name securevm --port 22
