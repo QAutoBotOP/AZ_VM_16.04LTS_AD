@@ -1,0 +1,10 @@
+$keyvaultname = Read-Host -Prompt 'Input your key vault name'
+$rgName = "__RESOURCE-GRP-NAME__"
+$vmname = "__VMNAME__"
+
+$keyVault = Get-AzKeyVault -VaultName $keyVaultName -ResourceGroupName $rgName;
+$diskEncryptionKeyVaultUrl = $keyVault.VaultUri;
+$keyVaultResourceId = $keyVault.ResourceId;
+$keyEncryptionKeyUrl = (Get-AzKeyVaultKey -VaultName $keyVaultName -Name thekey).Key.kid;
+
+Set-AzVMDiskEncryptionExtension -ResourceGroupName secure -vmname securevm -DiskEncryptionKeyVaultUrl $diskEncryptionKeyVaultUrl -DiskEncryptionKeyVaultId $keyVaultResourceId -KeyEncryptionKeyUrl $keyEncryptionKeyUrl -KeyEncryptionKeyVaultId $keyVaultResourceId
